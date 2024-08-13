@@ -1,5 +1,6 @@
 from PIL import Image
 import os
+from tkinter import filedialog as fd
 
 
 # human style alphanumeric sort
@@ -55,29 +56,39 @@ def merge(images, compression):
     return long_im
 
 
-PATH_VIA_TERMINAL = False
-COMPRESSION_VIA_TERMINAL = False
+PATH_VIA_TERMINAL = True
+COMPRESSION_VIA_TERMINAL = True
+powers_list = [1,2,4,8,16,32,64]
 
 if PATH_VIA_TERMINAL == True:
-    folder_path = input("Enter folder location: ")
+    print("Enter folder location")
+    folder_path = fd.askdirectory()
 else:
-    folder_path = r"E:\-SFU Physics Lab Work\OM Room\watkins_lab\2024-08-12\S271"
+    folder_path = r"C:\Users\gma78\Desktop\S271"
 
 if COMPRESSION_VIA_TERMINAL == True:
-    compression_factor = input("Enter folder location: ")
+    while(True):
+        compression_factor = input("Enter shortening factor (power of 2 up to 64): ")
+        compression_factor = int(compression_factor)
+        if compression_factor in powers_list:
+            break
+        print("please try again")
+
+
 else:
-    compression_factor = 1
+    compression_factor = 32
 
 extention = ".png"
 
 image_paths, file_example = extract_file_locations(folder_path, "tif")
 image = merge(image_paths, compression_factor)
 
-print("enter")
+print("Starting . . .")
 
 file_example_split = file_example.split(" ")
 file_name = file_example_split[0] + " " + file_example_split[1] + " " + "Shortened" + " " + str(compression_factor) + "x"
-image.save(folder_path + "\\" + file_name + extention)
-print(folder_path + "\\" + file_name + extention)
+file_path = folder_path + "\\" + file_name + extention
 
-print("exit")
+image.save(file_path)
+print(file_path)
+print("Finished!")
