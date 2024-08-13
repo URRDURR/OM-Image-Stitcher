@@ -3,6 +3,7 @@ from tkinter import filedialog as fd
 import os
 from PIL import Image
 import pillow_jxl
+import cv2 as cv
 
 
 # give the locations of all files of a type in a folder
@@ -44,11 +45,12 @@ stitcher = Stitcher()
 print("Starting . . .")
 image = stitcher.stitch(file_locations)
 
-image = Image.fromarray(image)
-r, g, b = image.split()
-image = Image.merge("RGB", (b, g, r))
-image = image.transpose(Image.ROTATE_180)
+imagep = Image.fromarray(image)
+r, g, b = imagep.split()
+imagep = Image.merge("RGB", (b, g, r))
+imagep = imagep.transpose(Image.ROTATE_180)
 
-file_path = folder_path + "\\" + "test-4.jxl"
-image.save(file_path, lossless=True)
+file_path = folder_path + "\\" + "test-6.1.png"
+imagep.save(file_path, lossless=True)
+# cv.imwrite((folder_path + "\\" + "test-6.2.png"), image)
 print("Finished!")
