@@ -48,7 +48,7 @@ def merge(images, compression):
     temp_im = Image.open(images[0])
     w = temp_im.size[0] * len(images) // compression
     h = temp_im.size[1]
-    long_im = Image.new("RGBA", (w, h))
+    long_im = Image.new("RGB", (w, h))
 
     for i in range(len(images)):
         im = Image.open(images[i])
@@ -61,13 +61,13 @@ def merge(images, compression):
 PATH_VIA_TERMINAL = False
 COMPRESSION_VIA_TERMINAL = True
 
-powers_list = [1, 2, 4, 8, 16, 32, 64]
+powers_list = [1, 2, 4, 8, 16, 32, 64, 26]
 
 if PATH_VIA_TERMINAL == True:
     print("Enter folder location")
     folder_path = fd.askdirectory()
 else:
-    folder_path = r"C:\Users\Big Me\OneDrive - Simon Fraser University (1sfu)\MOCVD-LAB\data\01-SMI-reactor\C03-Optical_microscope_images\S257"
+    folder_path = r"C:\Users\gma78\OneDrive - Simon Fraser University (1sfu)\MOCVD-LAB\data\01-SMI-reactor\C03-Optical_microscope_images\S270"
 
 if COMPRESSION_VIA_TERMINAL == True:
     while True:
@@ -77,7 +77,7 @@ if COMPRESSION_VIA_TERMINAL == True:
             break
         print("please try again")
 else:
-    compression_factor = 32
+    compression_factor = 1
 
 extention = ".jxl"
 
