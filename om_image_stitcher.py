@@ -1,6 +1,7 @@
 from PIL import Image
 import os
 from tkinter import filedialog as fd
+import pillow_jxl
 
 
 # human style alphanumeric sort
@@ -51,34 +52,34 @@ def merge(images, compression):
 
     for i in range(len(images)):
         im = Image.open(images[i])
+        im = im.transpose(Image.FLIP_LEFT_RIGHT)
         long_im.paste(im, ((temp_im.size[0] * i) // compression, 0))
 
     return long_im
 
 
-PATH_VIA_TERMINAL = True
+PATH_VIA_TERMINAL = False
 COMPRESSION_VIA_TERMINAL = True
-powers_list = [1,2,4,8,16,32,64]
+
+powers_list = [1, 2, 4, 8, 16, 32, 64]
 
 if PATH_VIA_TERMINAL == True:
     print("Enter folder location")
     folder_path = fd.askdirectory()
 else:
-    folder_path = r"C:\Users\gma78\Desktop\S271"
+    folder_path = r"C:\Users\Big Me\OneDrive - Simon Fraser University (1sfu)\MOCVD-LAB\data\01-SMI-reactor\C03-Optical_microscope_images\S257"
 
 if COMPRESSION_VIA_TERMINAL == True:
-    while(True):
+    while True:
         compression_factor = input("Enter shortening factor (power of 2 up to 64): ")
         compression_factor = int(compression_factor)
         if compression_factor in powers_list:
             break
         print("please try again")
-
-
 else:
     compression_factor = 32
 
-extention = ".png"
+extention = ".jxl"
 
 image_paths, file_example = extract_file_locations(folder_path, "tif")
 image = merge(image_paths, compression_factor)
@@ -86,9 +87,11 @@ image = merge(image_paths, compression_factor)
 print("Starting . . .")
 
 file_example_split = file_example.split(" ")
-file_name = file_example_split[0] + " " + file_example_split[1] + " " + "Shortened" + " " + str(compression_factor) + "x"
+file_name = (
+    file_example_split[0] + " " + file_example_split[1] + " " + "Shortened" + " " + str(compression_factor) + "x"
+)
 file_path = folder_path + "\\" + file_name + extention
 
-image.save(file_path)
+image.save(file_path, lossless=True)
 print(file_path)
 print("Finished!")
