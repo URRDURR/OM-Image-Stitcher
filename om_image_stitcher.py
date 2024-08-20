@@ -58,7 +58,7 @@ def merge(images, compression):
     return long_im
 
 
-PATH_VIA_TERMINAL = False
+PATH_VIA_TERMINAL = True
 COMPRESSION_VIA_TERMINAL = True
 
 powers_list = [1, 2, 4, 8, 16, 32, 64, 26]
