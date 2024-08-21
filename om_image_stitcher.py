@@ -6,9 +6,7 @@ import pillow_jxl
 
 # human style alphanumeric sort
 def alphanumeric_sort(input_paths):
-    # print(file_paths)
-    nums = [(int(file.split("\\")[-1].split(" ")[2][:-2]), file) for file in input_paths]
-    # print(nums)
+    nums = [(int(file.split("\\")[-1].split(".")[0].split(" ")[2][:-2]), file) for file in input_paths]
     nums.sort(key=lambda tup: tup[0])
 
     sorted_paths = []
@@ -28,7 +26,7 @@ def extract_file_locations(folder_path, file_type):
     testing = os.listdir(folder_path)
 
     for i in os.listdir(folder_path):
-        if (i.endswith(file_type)) and ("50x" in i) and ("S" in i):
+        if (i.endswith(file_type)) and ("50x" in i) and ("S" in i) and ("mm" in i):
             file_paths.append(i)
 
     # files sorted to be chronological
