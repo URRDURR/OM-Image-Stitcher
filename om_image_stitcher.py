@@ -50,6 +50,7 @@ def merge(images, compression):
 
     for i in range(len(images)):
         im = Image.open(images[i])
+        im = im.transpose(Image.FLIP_TOP_BOTTOM)
         im = im.transpose(Image.FLIP_LEFT_RIGHT)
         long_im.paste(im, ((temp_im.size[0] * i) // compression, 0))
 

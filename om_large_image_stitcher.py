@@ -56,7 +56,7 @@ image = stitcher.stitch(file_locations)
 imagep = Image.fromarray(image)
 r, g, b = imagep.split()
 imagep = Image.merge("RGB", (b, g, r))
-imagep = imagep.transpose(Image.ROTATE_180)
+imagep = imagep.transpose(Image.FLIP_TOP_BOTTOM)
 imagep = imagep.transpose(Image.FLIP_LEFT_RIGHT)
 
 file_path = folder_path + "\\" + "test-6.1.jxl"
