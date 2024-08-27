@@ -41,25 +41,26 @@ if PATH_VIA_TERMINAL == True:
     print("Enter folder location")
     folder_path = fd.askdirectory()
 else:
-    folder_path = r"C:\Users\gma78\Desktop\stich"
+    folder_path = r"C:\Users\gma78\OneDrive - Simon Fraser University (1sfu)\MOCVD-LAB\data\01-SMI-reactor\C03-Optical_microscope_images\S281\Cell 1"
 
 file_locations, ___ = extract_file_locations(folder_path, "tif")
 
-print(file_locations)
+extention = ".jxl"
+file_path = folder_path + "\\" + input("Enter name for new file: ") + extention
 
-stitcher = Stitcher()
-# confidence_threshold = 0.8
+print(file_path)
+
+stitcher = Stitcher(confidence_threshold = 0.5, detector = "brisk", try_use_gpu = True)
 
 print("Starting . . .")
 image = stitcher.stitch(file_locations)
 
 imagep = Image.fromarray(image)
+imagep.show()
 r, g, b = imagep.split()
 imagep = Image.merge("RGB", (b, g, r))
-imagep = imagep.transpose(Image.FLIP_TOP_BOTTOM)
+# imagep = imagep.transpose(Image.FLIP_TOP_BOTTOM)
 imagep = imagep.transpose(Image.FLIP_LEFT_RIGHT)
 
-file_path = folder_path + "\\" + "test-6.1.jxl"
 imagep.save(file_path, lossless=True)
-# cv.imwrite((folder_path + "\\" + "test-6.2.png"), image)
 print("Finished!")
